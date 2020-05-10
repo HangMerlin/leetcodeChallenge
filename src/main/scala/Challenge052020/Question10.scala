@@ -65,10 +65,39 @@ object Solution {
     doTrusts
       .zip(beTrusteds)
       .zipWithIndex
-      .find {
-        case ((doTrust: Boolean, beTrusted: Int), _: Int) => !doTrust && beTrusted == N - 1
-      }
+      .find { case ((doTrust, beTrusted), _) => !doTrust && beTrusted == N - 1 }
       .map(_._2 + 1)
       .getOrElse(-1)
+  }
+}
+
+// 1 array solution
+object Solution2 {
+  def findJudge(N: Int, trust: Array[Array[Int]]): Int = {
+    // difference between numberBeTrusts and numberTrustOthers
+    val diffTrusts = Array.fill[Int](N)(0)
+
+    for (t <- trust) {
+      val beTrusted = t(1)
+      val doTrust = t(0)
+      diffTrusts(beTrusted - 1) += 1
+      diffTrusts(doTrust - 1) -= 1
+    }
+
+    diffTrusts
+      .zipWithIndex
+      .find(_._1 == N - 1)
+      .map(_._2 + 1)
+      .getOrElse(-1)
+
+    // faster with var & while loop, but not very scala
+    //    var maybeJudge = -1
+    //    var index = 0
+    //    while(maybeJudge == -1 && index < diffTrusts.length){
+    //      val trusted = diffTrusts(index)
+    //      if (trusted == N - 1) maybeJudge = index + 1
+    //      index += 1
+    //    }
+    //    maybeJudge
   }
 }
