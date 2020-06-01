@@ -13,7 +13,7 @@ package Challenge052020
  * Replace a character
  */
 class Question31 {
-  //Dynamic programming solution
+  //Dynamic programming tabulation
   object Solution {
     def minDistance(word1: String, word2: String): Int = {
       val (l1, l2) = (word1.length, word2.length)
@@ -25,6 +25,40 @@ class Question31 {
         else dp(i + 1)(j + 1) = (dp(i)(j) min (dp(i)(j + 1) min dp(i + 1)(j))) + 1
       }
       dp(l1)(l2)
+    }
+  }
+
+  //dynamic programming memoization
+  object Solution2 {
+    def minDistance(word1: String, word2: String): Int = {
+      //memory notebook
+      val memo = scala.collection.mutable.HashMap.empty[(Int, Int), Int]
+      def dp(i: Int, j: Int): Int = {
+        memo.get((i, j)) match {
+          case Some(v) => v
+          case None => {
+            //base case, if one string reach the head, we count the rest length of another string
+            if (i < 0) j + 1
+            else if (j < 0) i + 1
+            else {
+              val res = {
+                //if the character in the string are the same, we skip
+                if (word1(i) == word2(j)) dp(i - 1, j - 1)
+                //take the minimize operations among insert/remove/replace
+                else (dp(i - 1, j - 1) // replace
+                  min (dp(i, j - 1) // insert
+                    min dp(i - 1, j)) // remove
+                ) + 1
+              }
+              //memoize result 
+              memo += ((i, j) -> res)
+              res
+            }
+          }
+        }
+      }
+      //begin from the last characters
+      dp(word1.length - 1, word2.length - 1)
     }
   }
 
