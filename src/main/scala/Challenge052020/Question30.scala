@@ -13,7 +13,7 @@ class Question30 {
 
   //simplest solution O(n * log(n))
   object Solution {
-    def kClosest(points: Array[Array[Int]], K: Int): Array[Array[Int]] = points.sortBy(p => p(0) * p(0) + p(1) * p(1)).take(K).reverse
+    def kClosest(points: Array[Array[Int]], K: Int): Array[Array[Int]] = points.sortBy(p => p(0) * p(0) + p(1) * p(1)).take(K)
   }
 
   //QuickSelect solution with random pivot O(n) to 0(n*n)

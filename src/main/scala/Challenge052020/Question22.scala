@@ -42,8 +42,11 @@ package Challenge052020
  * "bbaA" is also a valid answer, but "Aabb" is incorrect.
  * Note that 'A' and 'a' are treated as two different characters.
  */
+class Question22 {
 
-//easiest solution but maybe not the fastest way
-object Solution {
-  def frequencySort(s: String): String = s.groupBy(c => c).toSeq.sortBy(-_._2.length).foldLeft("")((acc, t) => acc + t._2)
+  //easiest solution but maybe not the fastest way
+  object Solution {
+    def frequencySort(s: String): String = s.groupBy(c => c).toSeq.sortBy(-_._2.length).foldLeft("")((acc, t) => acc + t._2)
+  }
+
 }

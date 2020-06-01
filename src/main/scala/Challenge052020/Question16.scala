@@ -31,27 +31,31 @@ package Challenge052020
  * }
  *
  */
-class ListNode(_x: Int = 0, _next: ListNode = null) {
-  var next: ListNode = _next
-  var x: Int = _x
-}
+class Question16 {
 
-object Solution {
+  class ListNode(_x: Int = 0, _next: ListNode = null) {
+    var next: ListNode = _next
+    var x: Int = _x
+  }
 
-  def oddEvenList(head: ListNode): ListNode = {
-    if (head == null || head.next == null) head
-    else {
-      val evenListHead = head.next
-      def reLinkList(odd: ListNode, even: ListNode): Unit = {
-        if (even == null || even.next == null) odd.next = evenListHead
-        else {
-          odd.next = even.next
-          even.next = odd.next.next
-          reLinkList(odd.next, even.next)
+  object Solution {
+
+    def oddEvenList(head: ListNode): ListNode = {
+      if (head == null || head.next == null) head
+      else {
+        val evenListHead = head.next
+        def reLinkList(odd: ListNode, even: ListNode): Unit = {
+          if (even == null || even.next == null) odd.next = evenListHead
+          else {
+            odd.next = even.next
+            even.next = odd.next.next
+            reLinkList(odd.next, even.next)
+          }
         }
+        reLinkList(head, evenListHead)
+        head
       }
-      reLinkList(head, evenListHead)
-      head
     }
   }
+
 }

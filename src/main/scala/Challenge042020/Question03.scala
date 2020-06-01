@@ -16,33 +16,37 @@ package Challenge042020
  *
  * If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
  */
-object Solution {
-  def maxSubArray(nums: Array[Int]): Int = maxSubArrayFrom(nums, 0, nums(0))
+class Question03 {
 
-  def maxSubArrayFrom(nums: Array[Int], from: Int, knownMaxSum: Int): Int = {
-    if (from == nums.length) knownMaxSum
-    else {
-      var sum = nums(from)
-      var maxSum = sum
-      var i = from + 1
-      while (i < nums.length && sum > 0) {
-        sum += nums(i)
-        maxSum = maxSum max sum
-        i += 1
+  object Solution {
+    def maxSubArray(nums: Array[Int]): Int = maxSubArrayFrom(nums, 0, nums(0))
+
+    def maxSubArrayFrom(nums: Array[Int], from: Int, knownMaxSum: Int): Int = {
+      if (from == nums.length) knownMaxSum
+      else {
+        var sum = nums(from)
+        var maxSum = sum
+        var i = from + 1
+        while (i < nums.length && sum > 0) {
+          sum += nums(i)
+          maxSum = maxSum max sum
+          i += 1
+        }
+        maxSubArrayFrom(nums, i, knownMaxSum max maxSum)
       }
-      maxSubArrayFrom(nums, i, knownMaxSum max maxSum)
+    }
+
+  }
+
+  object Solution2 {
+    def maxSubArray(nums: Array[Int]): Int = {
+      val (_, m) = nums.foldLeft((0, Int.MinValue))((acc, n) => {
+        val sum = (acc._1 max 0) + n
+        val cur = sum max acc._2
+        (sum, cur)
+      })
+      m
     }
   }
 
-}
-
-object Solution2 {
-  def maxSubArray(nums: Array[Int]): Int = {
-    val (_, m) = nums.foldLeft((0, Int.MinValue))((acc, n) => {
-      val sum = (acc._1 max 0) + n
-      val cur = sum max acc._2
-      (sum, cur)
-    })
-    m
-  }
 }
